@@ -18,6 +18,8 @@ router.get("/api/users/currentuser", requireAuth, async (req, res) => {
     amount: wallet?.amount_balance!,
   });
 
+  console.log(amount_in_bob);
+
   res.status(200).json({
     status: "sucess",
     user: {

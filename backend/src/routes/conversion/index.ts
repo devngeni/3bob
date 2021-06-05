@@ -28,4 +28,29 @@ router.post(
   }
 );
 
+router.get("/api/currency/current", async (req: Request, res: Response) => {
+  const currency = [
+    {
+      name: "Bitcoin",
+      symbol: "BTC",
+      amount: 3580.0,
+      increase_percentage: "+23%",
+    },
+    {
+      name: "Ethereum",
+      symbol: "ETH",
+      amount: 2703.4,
+      increase_percentage: "+31%",
+    },
+    {
+      name: "Solona",
+      symbol: "SOL",
+      amount: 1200.0,
+      increase_percentage: "+2%",
+    },
+  ];
+
+  res.status(200).json({ currency });
+});
+
 export { router as currencyConverterRoute };
