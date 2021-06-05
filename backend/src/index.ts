@@ -11,11 +11,13 @@ const start = async () => {
     !process.env.AT_SECRET &&
     !process.env.AT_USERNAME &&
     !process.env.APP_NAME &&
+    !process.env.APP_URL &&
     !process.env.PORT &&
-    !process.env.DB_URL
+    !process.env.DB_URL &&
+    !process.env.FOREX_CURRENCY_CONVERTER_API
   ) {
     throw new Error(
-      "APP_NAME && JWT_SECRET && AT_USERNAME && AT_SECRET && PORT $$ DB_URL  Must be defined in your .env FILE"
+      "APP_NAME && APP_URL && JWT_SECRET && AT_USERNAME && AT_SECRET && PORT DB_URL, FOREX_CURRENCY_CONVERTER_API  Must be defined in your .env FILE"
     );
   }
 
@@ -26,6 +28,7 @@ const start = async () => {
     await mongoose.connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
       useCreateIndex: true,
     });
     console.log("Connected to MongoDb");

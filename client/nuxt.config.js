@@ -1,7 +1,6 @@
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: '3bob-client',
+    title: '3BOB',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -9,45 +8,81 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      {src: '/vendor/jquery/jquery.min.js'}, 
+      {src: '/vendor/bootstrap/js/bootstrap.bundle.min.js'}, 
+      {src: '/vendor/waves/waves.min.js'},
+      {src: '/vendor/toastr/toastr.min.js'},
+      {src: '/vendor/toastr/toastr-init.js'},
+      {src: '/vendor/apexchart/apexcharts.min.js'},
+      {src: '/vendor/apexchart/apexchart-init.js'}
     ]
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
+ 
   css: [
+    './assets/vendor/waves/waves.min.css',
+    './assets/vendor/toastr/toastr.min.css',
+    './assets/css/style.css'
   ],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
-
-  // Auto import components: https://go.nuxtjs.dev/config-components
+  plugins: ["./plugins/filters.js"],
+  loading: "~/components/loading.vue",
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    "@nuxtjs/auth",
+    "@nuxtjs/toast"
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  toast: {
+    position: "top-right",
+    duration: 5000
+  },
+  axios: {
+    baseURL: "http://localhost:4000/api/"
+  },
 
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: "/users/signin",
+            method: "post",
+            propertyName: "token"
+          },
+          logout: {
+            url: "/users/signout",
+            method: "post"
+          },
+          user: {
+            url: "/users/currentuser",
+            method: "get",
+            propertyName: "user"
+          }
+        },
+        tokenType: "Bearer"
+      }
+    }
+  },
+
   pwa: {
     manifest: {
       lang: 'en'
     }
   },
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    babel: {
+      compact: true
+    }
   }
 }

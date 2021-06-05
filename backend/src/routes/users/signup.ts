@@ -3,13 +3,15 @@ import { body } from "express-validator";
 import { validateRequest } from "./../../middlewares/validate-request";
 import { BadRequestError } from "./../../errors/bad-request-error";
 import { User } from "./../../models/user";
-import { randomCode, sendSMS } from "./../../utils/common";
+import { mpesaPhoneFormat, randomCode, sendSMS } from "./../../utils/common";
+import { Wallet } from "../../models";
 
 const router = express.Router();
 
 router.post(
   "/api/users/signup",
   [
+    body("name").notEmpty().withMessage("Please provide your full names"),
     body("email").isEmail().withMessage("Please provide your email address"),
     body("phone").notEmpty().withMessage("Please provide your phone number"),
     body("password")
@@ -27,11 +29,11 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password, phone, confirm_password } = req.body;
-    const existingUser = await User.findOne({ email });
+    const { name, email, password, phone, confirm_password } = req.body;
+    const existingUser = await User.findOne({ $or: [{ email }, { phone }] });
 
     if (existingUser) {
-      throw new BadRequestError("Email already in use");
+      throw new BadRequestError("Email or Phone number already in use");
     }
 
     if (password !== confirm_password) {
@@ -41,13 +43,24 @@ router.post(
     //password hashing
     const activateCode = randomCode();
     const user = User.build({
+      name: name,
       email: email,
       password: password,
-      phone: phone,
+      phone: `+${mpesaPhoneFormat(phone)}`,
       activation_code: activateCode,
     });
 
     await user.save();
+
+    if (user) {
+      await Wallet.create({
+        amount_in: 0.0,
+        wallet_type: "user",
+        user: user.id,
+        amount_balance: 0.0,
+        amount_out: 0.0,
+      });
+    }
     /**
      * Send to User Via SMS
      */
@@ -56,6 +69,8 @@ router.post(
       `${process.env.APP_NAME!} actication code is:  ${activateCode}`
     );
     res.status(201).send(user);
+
+    return;
   }
 );
 
