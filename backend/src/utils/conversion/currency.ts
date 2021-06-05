@@ -12,21 +12,20 @@ const currencyConverter = async (opts: ConvertType) => {
   // Create a new conversion pair
   const pair = `${opts.from_currency}_${opts.to_currency}`;
   try {
-
-    const url= "https://pro-api.coinmarketcap.com/v1/tools/price-conversion"
+    const url = "https://pro-api.coinmarketcap.com/v1/tools/price-conversion";
 
     const headers = {
-      'X-CMC_PRO_API_KEY': process.env.COINBASE_API_KEY!
-    }
+      "X-CMC_PRO_API_KEY": process.env.COINBASE_API_KEY!,
+    };
 
-    const qs =  {
-      'amount': opts.amount,
-      'symbol': opts.from_currency,
-      'convert': opts.to_currency
-    }
+    const qs = {
+      amount: opts.amount,
+      symbol: opts.from_currency,
+      convert: opts.to_currency,
+    };
 
-    const { data } = await axios.post(url, qs , {headers: headers} );
-    console.log(data)
+    const { data } = await axios.post(url, qs, { headers: headers });
+    console.log(data);
 
     return {
       // amount: parseFloat(data[pair]) * opts.amount,
@@ -38,7 +37,5 @@ const currencyConverter = async (opts: ConvertType) => {
     throw new BadRequestError(`An error occurred`);
   }
 };
-
-
 
 export { currencyConverter };

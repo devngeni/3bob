@@ -14,10 +14,10 @@ const start = async () => {
     !process.env.APP_URL &&
     !process.env.PORT &&
     !process.env.DB_URL &&
-    !process.env.FOREX_CURRENCY_CONVERTER_API
+    !process.env.COINBASE_API_KEY
   ) {
     throw new Error(
-      "APP_NAME && APP_URL && JWT_SECRET && AT_USERNAME && AT_SECRET && PORT DB_URL, FOREX_CURRENCY_CONVERTER_API  Must be defined in your .env FILE"
+      "APP_NAME && APP_URL && JWT_SECRET && AT_USERNAME && AT_SECRET && PORT DB_URL, COINBASE_API_KEY  Must be defined in your .env FILE"
     );
   }
 

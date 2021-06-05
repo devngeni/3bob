@@ -22,9 +22,11 @@ app.use([
 ]);
 
 import { DepositTransactionRouter } from "./transactions/deposit";
+import { ListTransactionRoute } from "./transactions/list";
 import { CurrentUserWalletRoute } from "./transactions/wallets";
 app.use([DepositTransactionRouter]);
 app.use([CurrentUserWalletRoute]);
+app.use([ListTransactionRoute]);
 
 import { currencyConverterRoute } from "./conversion/index";
 app.use([currencyConverterRoute]);
