@@ -3,6 +3,7 @@ import { PasswordManager } from "./../utils/password";
 
 //And Interface that describes properties that are required new user
 interface UserAttrs {
+  name: string;
   email: string;
   phone: string;
   password: string;
@@ -16,6 +17,7 @@ interface UserModel extends mongoose.Model<UserDoc> {
 
 //An interface that describes single user properties
 interface UserDoc extends mongoose.Document {
+  name: string;
   email: string;
   phone: string;
   password: string;
@@ -30,8 +32,9 @@ interface UserDoc extends mongoose.Document {
 
 const userSchema = new mongoose.Schema(
   {
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    name: { type: String },
+    email: { type: String, unique: true },
+    password: { type: String, select: false },
     created_at: { type: Date, default: Date.now() },
     phone: { type: String, unique: true },
     password_changed_at: { type: Date },

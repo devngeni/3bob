@@ -12,7 +12,7 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { code } = req.body;
-    const existingUser = await User.findOne({ activationCode: code });
+    const existingUser = await User.findOne({ activation_code: code });
     if (!existingUser) {
       throw new BadRequestError("Failed. Invalid activation code!!!");
     }

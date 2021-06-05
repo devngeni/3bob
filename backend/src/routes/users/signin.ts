@@ -2,23 +2,29 @@ import express from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
-import { User } from "./../../models/user";
 import { validateRequest } from "./../../middlewares/validate-request";
 import { BadRequestError } from "./../../errors/bad-request-error";
 import { PasswordManager } from "./../../utils/password";
+import { Token, User } from "../../models";
+import { mpesaPhoneFormat } from "../../utils";
 
 const router = express.Router();
 router.post(
   "/api/users/signin",
   [
-    body("email").isEmail().withMessage("Email must be valid"),
-    body("password").trim().notEmpty().withMessage("You must supply password"),
+    body("username").notEmpty().withMessage("Please provide your username"),
+    body("password")
+      .trim()
+      .notEmpty()
+      .withMessage("Please supply your password"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or: [{ email: username }, { phone: `+${mpesaPhoneFormat(username)}` }],
+    }).select("password");
     if (!existingUser) {
       throw new BadRequestError("Sorry. Invalid email or password");
     }
@@ -35,9 +41,9 @@ router.post(
         "You recently changed your password. Please login again!!"
       );
     }
-    if (!existingUser.is_active) {
-      throw new BadRequestError("Please activate your account to continue");
-    }
+    // if (!existingUser.is_active) {
+    //   throw new BadRequestError("Please activate your account to continue");
+    // }
 
     // login the user
     const token = jwt.sign(
@@ -49,10 +55,14 @@ router.post(
       },
       process.env.JWT_SECRET!
     );
+
+    await Token.create({ token: token });
     res.status(200).json({
       status: "success",
       token,
     });
+
+    return;
   }
 );
 
