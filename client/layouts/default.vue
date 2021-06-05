@@ -40,19 +40,11 @@
                       ></span>
                     </div>
                     <div class="dropdown-menu dropdown-menu-right">
-                      <a href="accounts.html" class="dropdown-item">
-                        <i class="la la-user"></i> Account
-                      </a>
-                      <a href="history.html" class="dropdown-item">
-                        <i class="la la-book"></i> History
-                      </a>
-                      <a href="settings.html" class="dropdown-item">
-                        <i class="la la-cog"></i> Setting
-                      </a>
-                      <a href="lock.html" class="dropdown-item">
-                        <i class="la la-lock"></i> Lock
-                      </a>
-                      <a href="signin.html" class="dropdown-item logout">
+                      <a
+                        href="javascript:void()"
+                        @click="logout"
+                        class="dropdown-item logout"
+                      >
                         <i class="la la-sign-out"></i> Logout
                       </a>
                     </div>
@@ -69,44 +61,14 @@
       <div class="menu">
         <ul>
           <li>
-            <a
-              href="index-2.html"
+            <nuxt-link
               data-toggle="tooltip"
               data-placement="right"
-              title="Home"
+              title="Dashboard"
+              :to="{ nmae: 'index' }"
             >
               <span><i class="la la-igloo"></i></span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="buy-sell.html"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Exchange"
-            >
-              <span><i class="la la-exchange-alt"></i></span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="accounts.html"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Account"
-            >
-              <span><i class="la la-user"></i></span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="settings.html"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Setting"
-            >
-              <span><i class="la la-tools"></i></span>
-            </a>
+            </nuxt-link>
           </li>
         </ul>
       </div>
@@ -154,3 +116,16 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    async logout() {
+      try {
+        await this.$auth.logout()
+        this.$router.push({ name: 'auth-signin' })
+      } catch (error) {}
+    },
+  },
+}
+</script>

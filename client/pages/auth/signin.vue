@@ -79,7 +79,8 @@ export default {
           })
           .then((res) => {
             this.$nuxt.$loading.finish()
-            window.location.reload()
+            // window.location.reload()
+            this.$router.push({ name: 'index' })
           })
           .catch(({ response }) => {
             this.$nuxt.$loading.finish()

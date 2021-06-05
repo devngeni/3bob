@@ -7,7 +7,15 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css'
+      }
     ],
     script: [
       {src: '/vendor/jquery/jquery.min.js'}, 

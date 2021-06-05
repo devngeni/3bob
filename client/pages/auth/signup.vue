@@ -6,6 +6,16 @@
     <div class="card-body">
       <form @submit.prevent="signUpUser" name="myform" class="signin_validate">
         <div class="form-group">
+          <label>Full Name</label>
+          <input
+            type="email"
+            class="form-control"
+            v-model="form.name"
+            autocomplete="off"
+            placeholder="Full Name"
+          />
+        </div>
+        <div class="form-group">
           <label>Email</label>
           <input
             type="email"
@@ -77,6 +87,7 @@ export default {
   data() {
     return {
       form: {
+        name: '',
         email: '',
         phone: '',
         password: '',
