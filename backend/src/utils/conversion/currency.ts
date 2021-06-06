@@ -64,7 +64,7 @@ const getHistoricalData = async (opts: HistoricalData) => {
     }))
 
   } catch (error) {
-    throw new BadRequestError(`An error occurred ${error}`);
+    throw new BadRequestError(`An error occurred`);
   }
 };
 
