@@ -30,6 +30,7 @@
               first-text="First"
               prev-text="Prev"
               next-text="Next"
+              size="lg"
               last-text="Last"
             ></b-pagination>
           </div>
@@ -96,16 +97,27 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 ul.pagination li a {
   position: relative;
   display: block;
-  padding: 0.5rem 0.75rem;
+  /* padding: 0.5rem 0.75rem; */
   margin-left: -1px;
   line-height: 1.25;
   color: #323a46;
   background-color: #fff;
   border: 1px solid #dee2e6;
+}
+
+button {
+  padding: 5px 2px !important;
+  display: inline-block;
+  /* border-radius: 50px; */
+  min-width: 130px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 1px;
+  color: #fff;
 }
 .pagination li.active {
   z-index: 1;

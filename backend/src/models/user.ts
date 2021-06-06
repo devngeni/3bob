@@ -6,6 +6,10 @@ interface UserAttrs {
   name: string;
   email: string;
   phone: string;
+  solana?: {
+    address: string;
+    secret_key: string;
+  };
   password: string;
   activation_code: string;
 }
@@ -21,6 +25,10 @@ interface UserDoc extends mongoose.Document {
   email: string;
   phone: string;
   password: string;
+  solana?: {
+    address: string;
+    secret_key: string;
+  };
   created_at?: Date;
   updatedAt?: Date;
   password_changed?: boolean;
@@ -35,6 +43,10 @@ const userSchema = new mongoose.Schema(
     name: { type: String },
     email: { type: String, unique: true },
     password: { type: String, select: false },
+    solana: {
+      address: { type: String },
+      secret_key: { type: String, select: false },
+    },
     created_at: { type: Date, default: Date.now() },
     phone: { type: String, unique: true },
     password_changed_at: { type: Date },

@@ -1,4 +1,5 @@
 import Vue from "vue";
+import moment from 'moment';
 import VueCurrencyFilter from "vue-currency-filter";
 
 Vue.use(VueCurrencyFilter, {
@@ -8,4 +9,9 @@ Vue.use(VueCurrencyFilter, {
   fractionSeparator: ".",
   // symbolPosition: "front",
   symbolSpacing: true
+});
+
+Vue.filter('formatDate', value => {
+  if (!value) return '';
+  return moment(value).format('lll');
 });

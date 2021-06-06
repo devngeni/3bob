@@ -11,8 +11,8 @@
                 justify-content-between
               "
             >
-              <a class="navbar-brand" href="index-2.html"
-                ><img src="images/w_logo.png" alt="" /> <span>3BOB</span></a
+              <a class="navbar-brand" href="/"
+                ><img src="/images/logo-7.png" alt="" /> <span>3BOB</span></a
               >
 
               <div class="dashboard_log my-2">
@@ -20,12 +20,13 @@
                   <div class="account_money">
                     <ul>
                       <li class="crypto">
-                        <span>{{ $auth.user.amount_in_bob }} </span>
-                        BOB
+                        <span>{{ $auth.user.amount_in_bob }} BOB</span>
                       </li>
 
                       <li class="usd">
-                        <span>{{ $auth.user.amount_balance }} USD</span>
+                        <span
+                          >{{ $auth.user.amount_balance.toFixed(2) }} USD</span
+                        >
                       </li>
                     </ul>
                   </div>
@@ -123,9 +124,35 @@ export default {
     async logout() {
       try {
         await this.$auth.logout()
-        this.$router.push({ name: 'auth-signin' })
+        this.$router.push({ name: 'index' })
       } catch (error) {}
     },
   },
 }
 </script>
+
+<style>
+input[type='email'],
+input[type='number'],
+input[type='search'],
+input[type='text'],
+input[type='tel'],
+input[type='url'],
+input[type='password'],
+textarea,
+select {
+  display: block;
+  height: 6rem;
+  padding: 1.5rem 2rem;
+  border: 0;
+  outline: none;
+  color: #fff !important;
+  font-family: 'muli-regular', sans-serif;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  max-width: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+}
+</style>
