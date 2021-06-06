@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import { User, Wallet } from "./../../models";
 import { requireAuth } from "../../middlewares/require-auth";
-import { currencyConverter } from "../../utils";
+import { currencyConverter, localConvert } from "../../utils";
 
 router.get("/api/users/currentuser", requireAuth, async (req, res) => {
   const user = await User.findById(req.user?.id);
@@ -12,20 +12,18 @@ router.get("/api/users/currentuser", requireAuth, async (req, res) => {
     wallet_type: "user",
   }).select("-user");
 
-  const amount_in_bob = await currencyConverter({
+  const { amount } = await currencyConverter({
     from_currency: "USD",
     to_currency: "KES",
-    amount: wallet?.amount_balance!,
+    amount: 1,
   });
-
-  console.log(amount_in_bob);
 
   res.status(200).json({
     status: "sucess",
     user: {
       ...user?.toObject(),
       ...wallet?.toObject(),
-      amount_in_bob: amount_in_bob.amount,
+      amount_in_bob: wallet?.amount_balance!.toFixed(2),
     },
   });
 });
