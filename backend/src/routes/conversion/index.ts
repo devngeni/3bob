@@ -1,7 +1,7 @@
 import { body } from "express-validator";
 import { Router, Response, Request } from "express";
 import { validateRequest } from "../../middlewares/validate-request";
-import { currencyConverter } from "../../utils";
+import { currencyConverter, localConvert } from "../../utils";
 
 const router = Router();
 
