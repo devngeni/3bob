@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="row">
       <div
-        class="col-xl-12 col-lg-6 col-xxl-6"
+        class="col-xl-12 col-lg-6 col-xl-6"
         v-for="(curr, index) in currency"
         :key="index"
       >

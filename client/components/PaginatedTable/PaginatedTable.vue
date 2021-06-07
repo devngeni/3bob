@@ -97,7 +97,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 ul.pagination li a {
   position: relative;
   display: block;
@@ -137,27 +137,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 .form-control {
-  display: block;
-  width: 100%;
-  height: calc(1.5em + 0.9rem + 2px);
-  padding: 0.45rem 0.9rem;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #6c757d;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.2rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-.form-control-sm {
-  height: calc(1.5em + 0.5rem + 2px);
-  padding: 0.28rem 0.8rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  border-radius: 0.2rem;
-  border: 1px solid #ced4da;
-  outline-width: 0;
+  color: #fff;
 }
 </style>

@@ -25,7 +25,7 @@ router.post(
     body("phone")
       .notEmpty()
       .withMessage(
-        `Please provide amount to deposit to ${process.env.APP_NAME!.toLocaleLowerCase()}`
+        `Please provide amount to deposit to ${process.env.APP_NAME}`
       ),
   ],
   requireAuth,

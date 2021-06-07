@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
     password_changed_at: { type: Date },
     password_changed: { type: Boolean },
     password_change_token: { type: String },
-    is_active: { type: Boolean, default: false },
+    is_active: { type: Boolean, default: true },
     activation_code: { type: String },
   },
   {
@@ -83,7 +83,6 @@ userSchema.pre(/^find/, function (next) {
 userSchema.pre("save", async function (done) {
   if (this.isModified("password")) {
     const hashed = await PasswordManager.toHash(this.get("password"));
-    console.log("Hash", hashed);
     this.set("password", hashed);
   }
   done();

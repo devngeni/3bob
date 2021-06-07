@@ -143,7 +143,6 @@ textarea,
 select {
   display: block;
   height: 6rem;
-  padding: 1.5rem 2rem;
   border: 0;
   outline: none;
   color: #fff !important;

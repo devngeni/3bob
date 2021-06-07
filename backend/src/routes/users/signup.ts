@@ -81,7 +81,8 @@ router.post(
     try {
       await sendSMS(
         [user.phone],
-        `${process.env.APP_NAME!} actication code is:  ${activateCode}`
+        // `${process.env.APP_NAME!} actication code is:  ${activateCode}`
+        `Welcome to ${process.env.APP_NAME}, we are excited to have you on board. Get a crypto using your mpesa`
       );
     } catch (error) {
       console.log(error);
