@@ -60,8 +60,8 @@ export default {
   data() {
     return {
       form: {
-        username: 'test@test.com',
-        password: 'admin@123',
+        username: '',
+        password: '',
       },
     }
   },
