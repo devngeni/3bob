@@ -4,7 +4,13 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      {
+        hid: 'description',
+        name: 'description',
+        content: `Africa's most powerful web3 and defi tech stack powered by 
+        solana blockchain integrating on/off exchange ramp with mobile mobile networks (mPesa, Airtel, MTN & etc) via compability for both USSD, SMS and Web methods. Fully operateable wallets for exchanging,
+         buy, sell, trade, lend, borrow and exchange all without internet connection`
+      }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

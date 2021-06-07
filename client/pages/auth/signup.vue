@@ -8,7 +8,7 @@
         <div class="form-group">
           <label>Full Name</label>
           <input
-            type="email"
+            type="text"
             class="form-control"
             v-model="form.name"
             autocomplete="off"
@@ -105,7 +105,7 @@ export default {
           .then((res) => {
             this.$toast.success(res.data.message)
             this.$nuxt.$loading.finish()
-            this.$router.push({name: 'auth-signin'})
+            this.$router.push({ name: 'auth-signin' })
           })
           .catch(({ response }) => {
             this.$nuxt.$loading.finish()

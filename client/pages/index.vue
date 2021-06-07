@@ -67,7 +67,7 @@
             <nuxt-link
               class="btn btn-primary text-white"
               :to="{ name: 'auth-signin' }"
-              >{{ $auth.loggedIn ? 'Dashboard' : `Connect Phone` }}</nuxt-link
+              >{{ $auth.loggedIn ? `Dashboard` : `Connect Phone` }}</nuxt-link
             >
           </p>
         </div>
@@ -111,10 +111,7 @@ export default {
 
   .banner__left-content {
     width: 300px important;
-    display: flex;
-    flex-wrap: wrap;
     padding: 10px;
-    text-align: left !important;
   }
 
   .banner__size {
