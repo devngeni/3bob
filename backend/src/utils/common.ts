@@ -52,6 +52,16 @@ const accountNumber = () => {
   return Math.random().toString(35).substr(2, 7);
 };
 
+const encrypt = async (value: string) => {
+  let bufferObj = Buffer.from(value, "utf8");
+  return bufferObj.toString("base64");
+};
+
+const decrypt = async (value: string) => {
+  let bufferObj = Buffer.from(value, "base64");
+  return bufferObj.toString("utf8");
+};
+
 const mpesaPhoneFormat = (phone: string) => {
   let phoneNumber = "";
   if (phone.startsWith("254")) {
@@ -75,4 +85,6 @@ export {
   accountNumber,
   mpesaPhoneFormat,
   allowedFields,
+  encrypt,
+  decrypt,
 };

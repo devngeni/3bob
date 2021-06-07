@@ -3,8 +3,14 @@ import { body } from "express-validator";
 import { validateRequest } from "./../../middlewares/validate-request";
 import { BadRequestError } from "./../../errors/bad-request-error";
 import { User } from "./../../models/user";
-import { mpesaPhoneFormat, randomCode, sendSMS } from "./../../utils/common";
+import {
+  encrypt,
+  mpesaPhoneFormat,
+  randomCode,
+  sendSMS,
+} from "./../../utils/common";
 import { Wallet } from "../../models";
+import { createSolanaAccount } from "../../solana";
 
 const router = express.Router();
 
@@ -42,9 +48,16 @@ router.post(
 
     //password hashing
     const activateCode = randomCode();
+
+    const { address, secretKey } = await createSolanaAccount();
+
     const user = User.build({
       name: name,
       email: email,
+      solana: {
+        address,
+        secret_key: await encrypt(secretKey),
+      },
       password: password,
       phone: `+${mpesaPhoneFormat(phone)}`,
       activation_code: activateCode,
@@ -64,11 +77,18 @@ router.post(
     /**
      * Send to User Via SMS
      */
-    sendSMS(
-      [phone],
-      `${process.env.APP_NAME!} actication code is:  ${activateCode}`
-    );
-    res.status(201).send(user);
+
+    try {
+      await sendSMS(
+        [user.phone],
+        `${process.env.APP_NAME!} actication code is:  ${activateCode}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    const currentUser = await User.findById(user.id);
+    return res.status(201).json(currentUser);
 
     return;
   }

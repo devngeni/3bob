@@ -84,6 +84,7 @@
 <script>
 export default {
   layout: 'nosidebar',
+  middleware: ['guest'],
   data() {
     return {
       form: {

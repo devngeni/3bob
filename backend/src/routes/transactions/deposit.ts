@@ -65,13 +65,14 @@ router.post(
       accountNumber: accountNo,
     };
 
-    console.log(opts);
+    // console.log(opts);
 
     const response: any = await initiateSTK(opts);
     let message = "";
     if (response.error) {
       message = response.error;
     } else {
+      console.log(response);
       const transaction = Transaction.build({
         user: user.id,
         transactionId: "",
@@ -84,6 +85,7 @@ router.post(
       await transaction.save();
       console.log(transaction);
       if (!transaction.checkoutId) {
+        console.log("DELETED");
         await Transaction.findByIdAndDelete(transaction.id);
       }
       message = "Please enter your pin in the prompt in your phone";

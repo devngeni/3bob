@@ -19,46 +19,50 @@ import {
 
 const router = Router();
 
-router.get("/api/transactions", async (req: Request, res: Response) => {
-  const searchQuery = req.query.search?.toString();
-  let response;
-  //{$or: [{ name: regexSearch }, { description: regexSearch }]}
-  if (searchQuery) {
-    const regexSearch = new RegExp(`${searchQuery}`, "i");
-    response = new ApiResponse(
-      Transaction.find({
-        user: req.user?.id,
-        $or: [
-          { name: regexSearch },
-          { code: regexSearch },
-          { capital: regexSearch },
-        ],
-      }),
-      req.query
-    )
-      .filter()
-      .sort()
-      .limitFields();
-  } else {
-    response = new ApiResponse(
-      Transaction.find({ user: req.user?.id }),
-      req.query
-    )
-      .filter()
-      .sort()
-      .limitFields();
+router.get(
+  "/api/transactions",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const searchQuery = req.query.search?.toString();
+    let response;
+    //{$or: [{ name: regexSearch }, { description: regexSearch }]}
+    if (searchQuery) {
+      const regexSearch = new RegExp(`${searchQuery}`, "i");
+      response = new ApiResponse(
+        Transaction.find({
+          user: req.user?.id,
+          $or: [
+            { name: regexSearch },
+            { code: regexSearch },
+            { capital: regexSearch },
+          ],
+        }),
+        req.query
+      )
+        .filter()
+        .sort()
+        .limitFields();
+    } else {
+      response = new ApiResponse(
+        Transaction.find({ user: req.user?.id }),
+        req.query
+      )
+        .filter()
+        .sort()
+        .limitFields();
+    }
+
+    const count = await response.query;
+
+    const transactions = await response.paginate().query;
+
+    res.status(200).json({
+      status: "success",
+      page: response?.page_info,
+      count: count.length,
+      transactions,
+    });
   }
-
-  const count = await response.query;
-
-  const transactions = await response.paginate().query;
-
-  res.status(200).json({
-    status: "success",
-    page: response?.page_info,
-    count: count.length,
-    transactions,
-  });
-});
+);
 
 export { router as ListTransactionRoute };

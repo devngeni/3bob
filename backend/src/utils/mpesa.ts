@@ -5,7 +5,7 @@ const mpesa = require("mpesa-node");
 const mpesaApi = new mpesa({
   consumerKey: process.env.CONSUMER_KEY!,
   consumerSecret: process.env.CONSUMER_SECRET!,
-  environment: "production",
+  // environment: "production",
   shortCode: process.env.SHORT_CODE!,
   initiatorName: "WJS TECHNOLOGIES LIMITED",
   lipaNaMpesaShortCode: process.env.LNMO_SHORTCODE!,

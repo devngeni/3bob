@@ -56,7 +56,7 @@
 <script>
 export default {
   layout: 'nosidebar',
-
+  middleware: ['guest'],
   data() {
     return {
       form: {
@@ -79,7 +79,7 @@ export default {
           })
           .then((res) => {
             this.$nuxt.$loading.finish()
-            this.$router.push({ name: 'index' })
+            this.$router.push({ name: 'dashboard' })
           })
           .catch(({ response }) => {
             this.$nuxt.$loading.finish()

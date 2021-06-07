@@ -24,12 +24,15 @@ export default {
       {src: '/vendor/toastr/toastr.min.js'},
       {src: '/vendor/toastr/toastr-init.js'},
       {src: '/vendor/apexchart/apexcharts.min.js'},
-      {src: '/vendor/apexchart/apexchart-init.js'}
+      {src: '/js/plugins.js'},
+      {src: '/modernizr.js'},
+      {src: '/js/main.js'}
     ]
   },
-
- 
   css: [
+    // './assets/client/css/base.css',
+    './assets/client/css/vendor.css',
+    './assets/client/css/main.css',
     './assets/vendor/waves/waves.min.css',
     './assets/vendor/toastr/toastr.min.css',
     './assets/css/style.css'
