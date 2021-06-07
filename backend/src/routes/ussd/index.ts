@@ -5,9 +5,10 @@ import { PasswordManager, sendSMS } from '../../utils'
 import { User } from '../../models';
 
 let menu = new UssdMenu()
-let session = menu.sessionConfig.
 
 const router = Router();
+
+let message: string;
 
 // Define menu states
 menu.startState({
@@ -18,7 +19,7 @@ menu.startState({
     },
     next: {
         '1': 'registerUser',
-        '*\\w+': 'verifyUser'
+        '*[a-zA-Z0-9]+': 'verifyUser'
     }
 })
 
@@ -92,7 +93,7 @@ menu.state('verifyUser', {
         if (!existingUser) {
             menu.end("Sorry, you don't have an account with us, you will shortly receive an sms with instructions on how to register.");
         } else {
-            menu.con('3BOB Wallet Main Menu:' +
+            menu.con('3BOB Wallet Main Menu' +
                 '\n1: Buy Crypto' +
                 '\n2: Sell Crypto' +
                 '\n3: Send Crypto' +
@@ -107,7 +108,8 @@ menu.state('verifyUser', {
         '3': 'sendCrypto',
         '4': 'receiveCrypto',
         '000': 'logOut',
-    }
+    },
+    defaultNext: 'invalidOption'
 })
 
 menu.state('buyCrypto', {
@@ -116,14 +118,93 @@ menu.state('buyCrypto', {
             '\n1: Bitcoin' +
             '\n2: Ethereum' +
             '\n3: Solana' +
-            '\n\n0: Back'
+            goBackOptions()
         )
     },
     next: {
 
-        '0': 'buyCrypto.Solana'
+        '1': 'buyCrypto.Bitcoin',
+        '2': 'buyCrypto.Ethereum',
+        '3': 'buyCrypto.Solana'
+    },
+    defaultNext: 'invalidOption'
+})
+
+menu.state('buyCrypto.Solana', {
+    run: () => {
+        menu.con('Enter amount:')
+    },
+    next: {
+        // using regex to match user input to next state
+        '*\\d+': 'buyCrypto.amount'
     }
 })
+menu.state('buyCrypto.amount', {
+    run: () => {
+        let amount = Number(menu.val);
+
+        // verify user's amount
+
+    },
+    next: {
+    }
+})
+
+
+/**
+ * Receive Crypto
+ */
+menu.state('receiveCrypto', {
+    run: () => {
+        menu.con('Select crypto to receive:' +
+            '\n1: Bitcoin' +
+            '\n2: Ethereum' +
+            '\n3: Solana' +
+            goBackOptions()
+        )
+    },
+    next: {
+
+        '1': 'receiveCrypto.Bitcoin',
+        '2': 'receiveCrypto.Ethereum',
+        '3': 'receiveCrypto.Solana'
+    },
+    defaultNext: 'invalidOption'
+})
+
+menu.state('receiveCrypto.Solana', {
+    run: async () => {
+        menu.con('Thank you will receive an sms shortly with an address that you can share to receive Solana from anyone.' +
+            goBackOptions()
+        )
+
+        const user = await User.findOne({ phone: menu.args.phoneNumber })
+        message = 'Share this address to receive Solana'
+        message += `\nhttps://explorer.solana.com/address/${user!.solana?.address}`
+        sendSMS([menu.args.phoneNumber], message)
+    }
+})
+
+
+/**
+ * Log Out
+ */
+menu.state('logOut', {
+    run: () => {
+        menu.end('You have successfully logged out. Thank you for using 3BOB today.')
+    }
+})
+
+
+menu.state('invalidOption', {
+    run: () => {
+        menu.con('No such entry.' + goBackOptions())
+    }
+})
+
+const goBackOptions = () => {
+    return '\n---\n00: Main\n0: Back'
+}
 
 // Registering USSD handler with Express
 router.post('/api/v1/ussd', function (req: { body: UssdMenu.UssdGatewayArgs }, res: { send: (arg0: any) => void }) {
