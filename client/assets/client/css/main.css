@@ -1906,9 +1906,12 @@ html[data-useragent*='MSIE 10.0'] .home-scrolldown,
 #about {
   min-height: 786px;
   background-image: url('../images/about1.png');
+  background-repeat: no-repeat;
+  /* background-position: center; */
+  background-size: cover;
   padding-top: 18rem;
   overflow: hidden;
-  margin-bottom: 20vh;
+  margin-bottom: 1vh;
 }
 
 .about-intro {
