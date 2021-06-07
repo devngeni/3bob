@@ -105,6 +105,7 @@ export default {
           .then((res) => {
             this.$toast.success(res.data.message)
             this.$nuxt.$loading.finish()
+            this.$router.push({name: 'auth-signin'})
           })
           .catch(({ response }) => {
             this.$nuxt.$loading.finish()

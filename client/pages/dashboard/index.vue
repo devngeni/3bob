@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xl-3 col-lg-4 col-xxl-4">
+      <div class="col-xl-3 col-lg-2">
         <div class="card balance-widget">
           <div class="card-header border-0 py-0">
             <h4 class="card-title">Your Portfolio</h4>
@@ -9,8 +9,7 @@
           <price-preview :currency="currency" />
         </div>
       </div>
-
-      <div class="col-xl-6 col-lg-8 col-xxl-8">
+      <div class="col-xl-6 col-lg-6">
         <div class="card profile_chart">
           <div class="card-header py-0">
             <div class="chart_current_data">
@@ -35,14 +34,13 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-lg-12 col-xxl-12">
+      <div class="col-xl-3 col-lg-4">
         <div>
           <b-tabs content-class="mt-3" fill>
             <b-tab title="Buy Crypto" active>
               <br />
               <Exchange />
-              ></b-tab
-            >
+              </b-tab>
             <b-tab title="Deposit">
               <br />
               <deposit-to-account />
@@ -52,7 +50,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-12 col-lg- col-xxl-8">
+      <div class="col-12">
         <div class="card">
           <div class="card-header border-0 py-0">
             <h4 class="card-title">Transactions</h4>

@@ -8,19 +8,12 @@
         <form method="post" name="myform" class="currency_validate">
           <div class="form-group">
             <label class="mr-sm-2">Currency To Buy </label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label class="input-group-text"
-                  ><i class="cc BTC-alt"></i
-                ></label>
-              </div>
-              <select v-model="form.currency" class="form-control">
+            <select v-model="form.currency" class="form-control">
                 <option value="">Select</option>
                 <option value="BTC">BTC</option>
                 <option value="ETH">ETH</option>
                 <option value="SOL">SOL</option>
-              </select>
-            </div>
+            </select>
           </div>
 
           <div class="form-group" v-if="form.currency">
