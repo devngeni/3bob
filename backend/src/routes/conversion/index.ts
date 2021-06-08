@@ -1,7 +1,8 @@
 import { body } from "express-validator";
 import { Router, Response, Request } from "express";
 import { validateRequest } from "../../middlewares/validate-request";
-import { currencyConverter } from "../../utils";
+import { currencyConverter, getHistoricalData } from "../../utils";
+import axios from 'axios'
 
 const router = Router();
 
@@ -52,5 +53,44 @@ router.get("/api/currency/current", async (req: Request, res: Response) => {
 
   res.status(200).json({ currency });
 });
+
+
+router.get("/api/historical/crypto/data", async(req: Request, res: Response)  => {
+
+
+  // var markers = [];
+  // const items  = ['BTC', 'ETH', 'SOL']
+  // for (var i = 0; i < items.length; ++i) {
+  //     markers[i] = "some stuff";
+  // }
+
+  var history : any = [];
+
+  ['BTC', 'ETH', 'SOL'].forEach(async (element : any) => {
+    const hist =  await getHistoricalData({duration_in_months:1 , crypto: element})
+    if (element === 'ETH') {
+      history.push({
+        label: 'ETH',
+        data: hist,
+        backgroundColor: '#A6917D',
+        borderColor: '#A6917D',
+        borderWidth: 2,
+      })
+    } else if (element === 'BTC') {
+      history.push({
+        label: 'BTC',
+        data: hist,
+        backgroundColor: '#FAAC94',
+        borderColor: '#FAAC94',
+        borderWidth: 2,
+      })
+    }
+  })
+
+  console.log(history)
+
+  
+  res.status(200).json(history)
+})
 
 export { router as currencyConverterRoute };

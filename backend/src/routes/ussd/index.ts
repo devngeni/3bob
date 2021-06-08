@@ -146,7 +146,7 @@ menu.state('buyCrypto.amount', {
         // verify user's amount
         const user = (await User.findOne({phone: menu.args.phoneNumber})) as UserDoc
 
-        const wallet = await Wallet.findOne({user!: user})
+        const wallet = await Wallet.findOne({user: user.id, wallet_type: 'user'})
 
         if (amount<wallet?.amount_balance!) {
             //
@@ -227,3 +227,9 @@ router.post('/api/v1/ussd', function (req: { body: UssdMenu.UssdGatewayArgs }, r
 
 export { router as USSDRoutes }
 
+
+
+
+/**
+ * Callback for USDD http://155.138.139.112:9443/api/v1/ussd
+ */

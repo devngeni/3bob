@@ -40,7 +40,7 @@
             <b-tab title="Buy Crypto" active>
               <br />
               <Exchange />
-              </b-tab>
+            </b-tab>
             <b-tab title="Deposit">
               <br />
               <deposit-to-account />

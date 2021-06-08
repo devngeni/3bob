@@ -59,8 +59,6 @@ export default {
 
   created() {
     this.form.phone = this.$store.$auth.user.phone
-
-    console.log(this.$auth)
   },
 
   mounted() {

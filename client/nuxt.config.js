@@ -32,13 +32,22 @@ export default {
       {src: '/vendor/apexchart/apexcharts.min.js'},
       {src: '/js/plugins.js'},
       {src: '/modernizr.js'},
-      {src: '/js/main.js'}
+      {src: '/js/main.js'},
+      {src: '/client/vendor/jquery.easing/jquery.easing.min.js'},
+      {src: '/client/vendor/isotope-layout/isotope.pkgd.min.js'},
+      {src: '/client/vendor/owl.carousel/owl.carousel.min.js'},
+      {src: '/client/vendor/venobox/venobox.min.js'},
+      {src: '/client/vendor/aos/aos.js'},
     ]
   },
   css: [
-    // './assets/client/css/base.css',
-    './assets/client/css/vendor.css',
-    './assets/client/css/main.css',
+    './assets/client/vendor/icofont/icofont.min.css',
+    './assets/client/vendor/boxicons/css/boxicons.min.css',
+    './assets/client/vendor/owl.carousel/assets/owl.carousel.min.css',
+    './assets/client/vendor/venobox/venobox.css',
+    './assets/client/vendor/venobox/venobox.css',
+    './assets/client/vendor/aos/aos.css',
+    './assets/client/css/style.css',
     './assets/vendor/waves/waves.min.css',
     './assets/vendor/toastr/toastr.min.css',
     './assets/css/style.css'

@@ -3,6 +3,5 @@ export default function({ store, redirect }) {
       return redirect("/auth/signin");
     }
 
-    // console.log(store.state.auth.loggedIn)
   }
   

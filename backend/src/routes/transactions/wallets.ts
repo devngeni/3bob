@@ -10,9 +10,10 @@ router.get(
   `/api/wallets/currentuser`,
   requireAuth,
   async (req: Request, res: Response) => {
+    const user  = (await User.findById(req.user?.id)) as UserDoc
     const wallet = await Wallet.findOne({
       wallet_type: "user",
-      user: req.user?.id!,
+      user: user.id,
     });
 
     res.status(200).json({

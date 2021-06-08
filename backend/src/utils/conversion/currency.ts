@@ -37,7 +37,7 @@ interface HistoricalData {
   duration_in_months: number;
   crypto: string;
 }
-const getHistoricalData = async (opts: HistoricalData) => {
+const getHistoricalData = async (opts: HistoricalData) : Promise<[{date: string, value: string}]> => {
   try {
 
     const { data } = await axios({
@@ -58,12 +58,15 @@ const getHistoricalData = async (opts: HistoricalData) => {
       }
     })
 
-    return data.candles.map((item: Array<number>) => ({
+
+    console.log(data)
+    return data.candles ? data.candles.map((item: Array<number>) => ({
       date: item[0],
       value: item[1]
-    }))
+    })) : []
 
   } catch (error) {
+    console.log(error)
     throw new BadRequestError(`An error occurred`);
   }
 };
