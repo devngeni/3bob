@@ -1,5 +1,6 @@
 /** @format */
 import { Model, Schema, model, Document } from "mongoose";
+import { UserDoc } from "./user";
 
 interface Attrs {
   user?: string;
@@ -13,7 +14,7 @@ interface WalletModel extends Model<WalletDoc> {
 }
 
 interface WalletDoc extends Document {
-  user?: string;
+  user?: UserDoc;
   wallet_type: string;
   amount_in: number;
   amount_out: number;

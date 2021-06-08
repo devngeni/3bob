@@ -2,7 +2,7 @@ import UssdMenu from 'ussd-menu-builder'
 import { Router } from 'express'
 
 import { PasswordManager, sendSMS } from '../../utils'
-import { User } from '../../models';
+import { User, UserDoc, Wallet } from '../../models';
 
 let menu = new UssdMenu()
 
@@ -140,10 +140,21 @@ menu.state('buyCrypto.Solana', {
     }
 })
 menu.state('buyCrypto.amount', {
-    run: () => {
+    run: async () => {
         let amount = Number(menu.val);
 
         // verify user's amount
+        const user = (await User.findOne({phone: menu.args.phoneNumber})) as UserDoc
+
+        const wallet = await Wallet.findOne({user!: user})
+
+        if (amount<wallet?.amount_balance!) {
+            //
+        }
+        else {
+            menu.con('You have insufficient balance to complete this transaction. Please topup and try again.'+ 
+            goBackOptions())
+        }
 
     },
     next: {
