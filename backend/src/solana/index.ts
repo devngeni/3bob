@@ -1,4 +1,4 @@
-import { Keypair } from '@solana/web3.js'
+import { Keypair, PublicKey, SystemProgram, TransactionInstruction } from '@solana/web3.js'
 
 
 interface createSolanaAccount {
@@ -10,7 +10,7 @@ interface createSolanaAccount {
  * @returns account address and secret key
  */
 
-const createSolanaAccount = async  () : Promise<{address: string, secretKey: string }> =>  {
+const createSolanaAccount = async (): Promise<{ address: string, secretKey: string }> => {
     const keypair = new Keypair()
 
     const address: string = keypair.publicKey.toString()
@@ -24,6 +24,27 @@ const createSolanaAccount = async  () : Promise<{address: string, secretKey: str
 
 }
 
+interface TransferParams {
+    /** Account that will transfer lamports */
+    fromPubkey: string;
+    /** Account that will receive transferred lamports */
+    toPubkey: string;
+    /** Amount of lamports to transfer */
+    lamports: number;
+};
 
-export {createSolanaAccount}
+/**
+ *  Transfers lamports from one account to another
+ * @param params TransferParams
+ */
+const transferLamports = async (params: TransferParams) => {
+
+    const txnInst: TransactionInstruction = SystemProgram.transfer({
+        fromPubkey: new PublicKey(params.fromPubkey),
+        lamports: params.lamports,
+        toPubkey: new PublicKey(params.toPubkey),
+    })
+}
+
+export { createSolanaAccount, transferLamports }
 
